@@ -15,9 +15,9 @@ public abstract class Creature extends Entity implements Updatable
     protected float radialSpeed = 0;
     protected BufferedImage texture;
 
-    public Creature(Game game, int x, int y, int width, int height, int health)
+    public Creature(Game game, int x, int y, int width, int height, BufferedImage texture, int health)
     {
-        super(game, x, y, width, height);
+        super(game, x, y, width, height, texture);
         this.health = health;
     }
 

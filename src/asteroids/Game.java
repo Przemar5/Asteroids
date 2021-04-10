@@ -1,6 +1,9 @@
 package asteroids;
 
 import asteroids.display.Display;
+import asteroids.states.GameState;
+import asteroids.states.MenuState;
+import asteroids.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -15,12 +18,18 @@ public class Game implements Runnable
     private Thread thread;
     private boolean running = false;
     private int fps = 60;
+    private GameState gameState;
+    private MenuState menuState;
+    private State currentState;
 
     public Game(String title, int width, int height)
     {
         this.title = title;
         this.width = width;
         this.height = height;
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
+        currentState = gameState;
     }
 
     @Override
@@ -64,7 +73,7 @@ public class Game implements Runnable
 
     private void update()
     {
-        //
+        currentState.update();
     }
 
     private void render()
@@ -77,6 +86,10 @@ public class Game implements Runnable
         }
         g = bs.getDrawGraphics();
         g.fillRect(0, 0, width, height);
+
+        if (currentState != null)
+            currentState.render(g);
+        
         bs.show();
         g.dispose();
     }
